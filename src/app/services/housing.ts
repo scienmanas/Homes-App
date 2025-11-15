@@ -117,14 +117,15 @@ export class Housing {
   }> {
     // return this.housingLocationList;
     try {
-      const data = await fetch(this.url);
-      const json = await data.json();
-      // The API returns { locations: [...] }, so extract the locations array
-      if (Array.isArray(json) && json.length > 0) {
-        return { locations: json, status: 'success' };
-      } else {
-        return { locations: [], status: 'fail' };
-      }
+      // const data = await fetch(this.url);
+      // const json = await data.json();
+      // // The API returns { locations: [...] }, so extract the locations array
+      // if (Array.isArray(json) && json.length > 0) {
+      //   return { locations: json, status: 'success' };
+      // } else {
+      //   return { locations: [], status: 'fail' };
+      // }
+      return { locations: this.housingLocationList, status: 'success' };
     } catch (error) {
       console.error('Error fetching housing locations:', error);
       return {
@@ -140,14 +141,18 @@ export class Housing {
     // const data = await fetch(this.url);
     // return this.housingLocationList.find((housingLocation) => housingLocation.id === id);
     try {
-      const data = await fetch(`${this.url}?id=${id}`);
-      const locationJson = await data.json();
-      // If API returns { locations: [...] }, extract the array first
-      if (locationJson[0]) {
-        return { location: locationJson[0], status: 'success' };
-      } else {
-        return { location: undefined, status: 'fail' };
-      }
+      // const data = await fetch(`${this.url}?id=${id}`);
+      // const locationJson = await data.json();
+      // // If API returns { locations: [...] }, extract the array first
+      // if (locationJson[0]) {
+      //   return { location: locationJson[0], status: 'success' };
+      // } else {
+      //   return { location: undefined, status: 'fail' };
+      // }
+      return {
+        location: this.housingLocationList.find((housingLocation) => housingLocation.id === id),
+        status: 'success',
+      };
     } catch (error) {
       console.error('Error fetching housing location by id:', error);
       return { location: undefined, status: 'fail' };

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Housing } from '../../services/housing';
 import { HousingLocationInfo } from '../housing-location/housing-location';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { signal } from '@angular/core';
 
 @Component({
   selector: 'app-details',
@@ -13,7 +14,7 @@ import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 export class Details {
   route: ActivatedRoute = inject(ActivatedRoute);
   housingLocationService = inject(Housing);
-  housingLocation: HousingLocationInfo | undefined;
+  housingLocation = signal<HousingLocationInfo | undefined>(undefined);
 
   applyForm = new FormGroup({
     firstName: new FormControl(''),
@@ -31,7 +32,7 @@ export class Details {
         if (housingLocation.status === 'success') {
           console.log(`Fetched the housing location details with id: ${housingLocationId}`);
           console.log(housingLocation.location);
-          this.housingLocation = housingLocation.location;
+          this.housingLocation.set(housingLocation.location);
         } else {
           console.log(
             `Error encountered fecthing the location details with id ${housingLocationId}`
